@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Typing Speed Test</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            margin: 50px;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #333;
+        }
+        #text-container {
+            width: 60%;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 10px;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .highlight {
+            color: #ff3d68;
+        }
+        textarea {
+            width: 60%;
+            height: 100px;
+            margin-top: 10px;
+            border: 2px solid #ff758c;
+            border-radius: 5px;
+            padding: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background: #ff758c;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #ff3d68;
+        }
+        #result {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>🚀 Typing Speed Challenge! ⌨️</h1>
+    <div id="text-container"></div>
+    <textarea id="input-text" placeholder="Start typing here..."></textarea>
+    <br>
+    <button onclick="startTest()">🔄 Restart</button>
+    <div id="result"></div>
+
+    <script>
+        const sampleTexts = [
+            "The quick brown fox jumps over the lazy dog.",
+            "Typing fast is a skill that improves with practice!",
+            "Great typists make fewer errors and type with speed!",
+            "Speed and accuracy go hand in hand when typing."
+        ];
+        let startTime, endTime;
+        let textToType = "";
+        
+        function loadText() {
+            textToType = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
+            document.getElementById("text-container").innerHTML = textToType.split(' ').map(word => `<span>${word}</span>`).join(' ');
+            document.getElementById("input-text").value = "";
+            document.getElementById("result").innerText = "";
+            startTime = null;
+        }
+        
+        function startTest() {
+            loadText();
+        }
+        
+        document.getElementById("input-text").addEventListener("input", function () {
+            if (!startTime) startTime = new Date();
+            const typedWords = this.value.split(' ');
+            const words = document.querySelectorAll("#text-container span");
+            words.forEach((word, index) => {
+                if (typedWords[index] === word.innerText) {
+                    word.classList.add("highlight");
+                } else {
+                    word.classList.remove("highlight");
+                }
+            });
+            if (this.value.trim() === textToType) {
+                endTime = new Date();
+                calculateSpeed();
+            }
+        });
+        
+        function calculateSpeed() {
+            const timeTaken = (endTime - startTime) / 1000; // in seconds
+            const wordCount = textToType.split(" ").length;
+            const wpm = Math.round((wordCount / timeTaken) * 60);
+            document.getElementById("result").innerHTML = `🎉 Your speed: <span style="color: #ff3d68">${wpm} WPM</span> 🚀`;
+        }
+        
+        loadText();
+    </script>
+</body>
+</html>
