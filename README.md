@@ -1,5 +1,5 @@
 # TypeRacer-using-Html-CSS-JavaScript
-# Typing Speed Test Web App
+
 
 This is a simple typing speed test web application built using HTML, CSS, and JavaScript. It allows users to measure their typing speed in words per minute (WPM) by typing a randomly selected sentence.
 
